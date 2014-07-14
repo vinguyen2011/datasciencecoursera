@@ -2,14 +2,14 @@ library(shiny)
 shinyUI(pageWithSidebar(
   headerPanel("How religious are you?"),
   sidebarPanel(
-      p("This simple tool can reveal how religious you are, ranging from 0 (very low) to 10 (very high). We have collected a dataset to help building this tool."),
-      h5("1. Select a mode to build the formula"),
+      p("This simple tool can reveal how religious you are, ranging from 0 (very low) to 10 (very high). We have collected a dataset to help building this tool - Tab 'Dataset Information'. Please click on the Tab 'Readme!' for some tutorials."),
+      h5("1. Select a mode to build the formula - Tab 'Model'"),
       p("We are going to run a regression model on this dataset to define the formula for the independent
         variable. Please select a mode."),
       radioButtons("mode","Regression modes:",c("Basic multiple regression","Backwards stepwise regression","Forwards stepwise regression")),
       submitButton(text = "Run regression model"),
       br(),
-      h5("2. Calculate your level of religious (0-10)"),
+      h5("2. Calculate your level of religious (0-10) - Tab 'Your calculation' "),
       p("Please fill in a corresponding value for each of those elements."),
       numericInput("age","Age[Age] (>0):", value = 18, min=0, step = 1),
       radioButtons("education","Highest educational level[Education]:", c("Primary education","Secondary education","College","Bachelor or equivalent","Master or equivalent","Doctoral or higher")),
@@ -25,28 +25,26 @@ shinyUI(pageWithSidebar(
   mainPanel(
     tabsetPanel(
       id = "tab",
-      tabPanel("Readme!",
+      tabPanel("Your calculation",verbatimTextOutput("calculation")),
+      tabPanel("Model", 
                tabsetPanel(
-                 id="readMe",
-                 tabPanel("Variables and records",  verbatimTextOutput("tutorial"))
+                 id = "tabModel",
+                 tabPanel("Summary of the model",verbatimTextOutput("regressionModel")),
+                 tabPanel("Residuals",plotOutput("residuals"))
                )
       ),
-      tabPanel("Database Information",
+      tabPanel("Dataset Information",
                tabsetPanel(
                  id="tabData",
                  tabPanel("Variables and records",  verbatimTextOutput("dataInfo")),
                  tabPanel("Independent variable - Level of religious", plotOutput("map")),
                  tabPanel("Scatterplots",plotOutput("scatterPlot"))
                )
-              ),
-      tabPanel("Model", 
-               tabsetPanel(
-                 id = "tabModel",
-                 tabPanel("Summary of the model",verbatimTextOutput("regressionModel")),
-                 tabPanel("Residuals",plotOutput("residuals"))
-                )
-              ),
-      tabPanel("Your calculation",verbatimTextOutput("calculation"))
+      ),
+      
+      tabPanel("Readme!",
+               verbatimTextOutput("tutorial"))
+      
     )
   )
 ))

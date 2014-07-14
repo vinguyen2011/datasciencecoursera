@@ -172,8 +172,9 @@ shinyServer(
           religious <- religious + (as.numeric(coeff[n])*as.numeric(input$obey_rules))
         }
       }
-      print("Your level of religious (0 - very high; 10 - very low) is: ")
-      print(religious)
+      print(paste(input$mode," View details in Tab 'Model'", sep =" - "))
+      print(paste("Your level of religious (0 - very high; 10 - very low) is: ", as.character(religious)))
+      #print(religious)
     })
     
   }
