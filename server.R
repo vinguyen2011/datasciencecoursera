@@ -110,72 +110,123 @@ shinyServer(
       coeff <- f(as.character(input$mode))$coefficients
       length <- length(in_var)
       religious <- as.numeric(coeff[1])
-      #print(religious)
+
+      #Vector for the formula
+      formula <- c("religious_self = ",as.numeric(coeff[1]), "+")
       
       for(n in 2:length)
       {
-        #print(as.numeric(coeff[n]))
-        #print(as.character(in_var[n]))
         if (in_var[n]=="Age")
         {  
           religious <- religious + (as.numeric(coeff[n])*as.numeric(input$age))
+          formula <- c(formula, as.character(as.numeric(coeff[n])), " * ", as.character(as.numeric(input$age)),"+")
         }
         else if (in_var[n]=="Education")
         {  
           if(input$education =="Primary education")
           {
             religious <- religious + (as.numeric(coeff[n])*1)
+            formula <- c(formula, as.character(as.numeric(coeff[n])), " * ", "1","+")
+            
           }
           else if(input$education =="Secondary education")
           {
             religious <- religious + (as.numeric(coeff[n])*2)
+            formula <- c(formula, as.character(as.numeric(coeff[n])), " * ", "2","+")
+            
           }
           else if(input$education =="College")
           {
             religious <- religious + (as.numeric(coeff[n])*3)
+            formula <- c(formula, as.character(as.numeric(coeff[n])), " * ", "3","+")
+            
           }
           else if(input$education =="Bachelor or equivalent")
           {
             religious <- religious + (as.numeric(coeff[n])*4)
+            formula <- c(formula, as.character(as.numeric(coeff[n])), " * ", "4","+")
+            
           }
           else if(input$education =="Master or equivalent")
           {
             religious <- religious + (as.numeric(coeff[n])*5)
+            formula <- c(formula, as.character(as.numeric(coeff[n])), " * ", "5","+")
+            
           }
           else
           {
             religious <- religious + (as.numeric(coeff[n])*6)
+            formula <- c(formula, as.character(as.numeric(coeff[n])), " * ", "6","+")
+            
           }
         }
         else if (in_var[n]=="Daily_news")
         {  
           religious <- religious + (as.numeric(coeff[n])*as.numeric(input$daily_news))
+          formula <- c(formula, as.character(as.numeric(coeff[n])), " * ", as.character(as.numeric(input$daily_news)),"+")
+          
         }
         else if (in_var[n]=="Strength_parents")
         {  
           religious <- religious + (as.numeric(coeff[n])*as.numeric(input$strength_parents))
+          formula <- c(formula, as.character(as.numeric(coeff[n])), " * ", as.character(as.numeric(input$strength_parents)),"+")
+          
         }
         else if (in_var[n]=="Religious_country")
         {  
           religious <- religious + (as.numeric(coeff[n])*as.numeric(input$religious_country))
+          formula <- c(formula, as.character(as.numeric(coeff[n])), " * ", as.character(as.numeric(input$religious_country)),"+")
+          
         }
         else if (in_var[n]=="Worship")
         {  
           religious <- religious + (as.numeric(coeff[n])*as.numeric(input$worship))
+          formula <- c(formula, as.character(as.numeric(coeff[n])), " * ", as.character(as.numeric(input$worship)),"+")
+          
         }
         else if (in_var[n]=="Religious_hours")
         {  
           religious <- religious + (as.numeric(coeff[n])*as.numeric(input$religious_hours))
+          formula <- c(formula, as.character(as.numeric(coeff[n])), " * ", as.character(as.numeric(input$religious_hours)),"+")
+          
         }
         else if (in_var[n]=="Obey_rules")
         {  
           religious <- religious + (as.numeric(coeff[n])*as.numeric(input$obey_rules))
+          formula <- c(formula, as.character(as.numeric(coeff[n])), " * ", as.character(as.numeric(input$obey_rules)))
+          
         }
       }
+      
       print(paste(input$mode," View details in Tab 'Model'", sep =" - "))
+      print(paste(formula, sep ="",collapse = ""))
       print(paste("Your level of religious (0 - very high; 10 - very low) is: ", as.character(religious)))
-      #print(religious)
     })
     
+    #Tutorials
+    output$tutorial <- renderText({
+      paste("
+This tool will run a regression analysis on a pre-defined dataset of 654 records. Thus, the model will define the formula which is used to 
+calculate your level of religious (0 - very low, 10 - very high)
+
+To run this application, we need your inputs. 
+Step 1: Please select a mode for the regression model. There are three modes: Basic multiple regression, Backwards stepwise regression and Forwards stepwise regression.
+Step 2: Please answer some questions which will give us the inputs of several dependent variables for the calculation. 
+Finally, please press the button 'Calculate'.
+
+The final result will be shown in the Tab 'Your calculation'.
+If you want to check the model, please select the Tab 'Model'. 
+- The sub-tab 'Summary of the model' will give you a summary of the regression analysis. 
+- The sub-tab 'Residuals' shows the histogram of the residuals from the regression analysis
+
+If you want to check the dataset, please select the Tab 'Dataset Information'
+- The sub-tab 'Variables and records' shows the description of all variables in the dataset
+- The sub-tab 'Level of religious' depicts the histogram of the dependent variable (religious_self)
+- The sub-tab 'Scatterplots' presents the scatter plots and the histogram of all variables in the dataset
+
+Final remark is that the dataset is made up for the purpose of demonstration.  
+Enjoy!
+      ")
+    })
   }
 )
