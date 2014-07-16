@@ -25,19 +25,19 @@ shinyServer(
             Education [Education]: category
             Number of studied years [Study_years]: numeric
             Number of hours per week to read news [Daily_news]: numeric
-            Level of religious of your country [Religious_country]: category
-            Level of religious of your parents are [Strength_parents]: category
+            Level of religiousness of your country [Religious_country]: category
+            Level of religiousness of your parents are [Strength_parents]: category
             Number of times per year you visit a place to worship [Worship]: numeric
             Number of hours you practice your religion [Religion_hours]: numeric
             Level of obeying the religious rules [Obey_rules]: category
-            Your level of religious [religious_self]: category")
+            Your level of religiousness [religious_self]: category")
     })
     
     #Histogram of the dependent variable
     output$map <- renderPlot({    
       hist(dataCleaned$religious_self, density=20, prob=TRUE, col="thistle", 
            main ="Histogram of religious_self",
-           xlab="Level of religious (self assessment)")
+           xlab="Level of religiousness (self assessment)")
       curve(dnorm(x, mean=m, sd=std), add=TRUE)
     })
     
@@ -200,14 +200,14 @@ shinyServer(
       
       print(paste(input$mode," View details in Tab 'Model'", sep =" - "))
       print(paste(formula, sep ="",collapse = ""))
-      print(paste("Your level of religious (0 - very high; 10 - very low) is: ", as.character(religious)))
+      print(paste("Your level of religiousness (0 - very low; 10 - very high) is: ", as.character(religious)))
     })
     
     #Tutorials
     output$tutorial <- renderText({
       paste("
 This tool will run a regression analysis on a pre-defined dataset of 654 records. Thus, the model will define the formula which is used to 
-calculate your level of religious (0 - very low, 10 - very high)
+calculate your level of religiousness (0 - very low, 10 - very high)
 
 To run this application, we need your inputs. 
 Step 1: Please select a mode for the regression model. There are three modes: Basic multiple regression, Backwards stepwise regression and Forwards stepwise regression.
@@ -221,7 +221,7 @@ If you want to check the model, please select the Tab 'Model'.
 
 If you want to check the dataset, please select the Tab 'Dataset Information'
 - The sub-tab 'Variables and records' shows the description of all variables in the dataset
-- The sub-tab 'Level of religious' depicts the histogram of the dependent variable (religious_self)
+- The sub-tab 'Level of religiousness' depicts the histogram of the dependent variable (religious_self)
 - The sub-tab 'Scatterplots' presents the scatter plots and the histogram of all variables in the dataset
 
 Final remark is that the dataset is made up for the purpose of demonstration.  

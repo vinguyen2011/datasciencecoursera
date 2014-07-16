@@ -8,7 +8,7 @@ shinyUI(pageWithSidebar(
       p("We are going to run a regression analysis on this dataset to define the formula for the independent
         variable. Please select a mode."),
       radioButtons("mode","Regression modes:",c("Basic multiple regression","Backwards stepwise regression","Forwards stepwise regression")),
-      h5("2. Calculate your level of religious (0-10) - Tab 'Your calculation' "),
+      h5("2. Calculate your level of religiousness (0-10) - Tab 'Your calculation' "),
       p("Please fill in a corresponding value for each of those elements."),
       numericInput("age","Age[Age] (>16):", value = 18, min=16, step = 1),
       radioButtons("education","Highest educational level[Education]:", c("Primary education","Secondary education","College","Bachelor or equivalent","Master or equivalent","Doctoral or higher")),
@@ -36,7 +36,7 @@ shinyUI(pageWithSidebar(
                tabsetPanel(
                  id="tabData",
                  tabPanel("Variables and records",  verbatimTextOutput("dataInfo")),
-                 tabPanel("Level of religious", plotOutput("map")),
+                 tabPanel("Level of religiousness", plotOutput("map")),
                  tabPanel("Scatterplots",plotOutput("scatterPlot"))
                )
       ),
